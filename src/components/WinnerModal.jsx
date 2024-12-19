@@ -8,14 +8,14 @@ export function WinnerModal ({ winner, resetGame }) {
   return (
     <section className='winner'>
       <div className='text'>
-        <h2>{winnerText}</h2>
+        <h1>{winnerText}</h1>
 
         <header className='win'>
           {winner && <Square>{winner}</Square>}
         </header>
 
         <footer>
-          <button onClick={resetGame}>Empezar de nuevo</button>
+          <button onClick={resetGame}>Empieza otro juego</button>
         </footer>
       </div>
     </section>
