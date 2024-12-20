@@ -33,12 +33,8 @@ jobs:
 
   deploy:
     name: Desplegar en EC2
-    runs-on: ub-tictactoe-runner
+    runs-on: ubuntu-latest
     needs: build
-
-    strategy:
-      matrix:
-        ec2_instance: [ "EC2_HOST_1", "EC2_HOST_2" ]
 
     steps:
       - name: Descargar artefacto
@@ -50,7 +46,7 @@ jobs:
       - name: Copiar archivos al servidor EC2
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets[matrix.ec2_instance] }}
+          host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "./*"
@@ -59,7 +55,7 @@ jobs:
       - name: Reiniciar Nginx
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets[matrix.ec2_instance] }}
+          host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
