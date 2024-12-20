@@ -33,7 +33,7 @@ jobs:
 
   deploy:
     name: Desplegar en EC2
-    runs-on: ubuntu-latest
+    runs-on: ub-tictactoe-runner
     needs: build
 
     steps:
