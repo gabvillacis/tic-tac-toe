@@ -33,7 +33,7 @@ jobs:
 
   deploy:
     name: Desplegar en EC2
-    runs-on: ubuntu-latest
+    runs-on: tic-tac-toe-runner
     needs: build
 
     steps:
