@@ -38,6 +38,10 @@ jobs:
     runs-on: tic-tac-toe-runner
     needs: build
 
+    strategy:
+      matrix:
+        ec2_instance: [ "EC2_HOST_1", "EC2_HOST_2" ]
+
     steps:
       - name: Descargar artefacto
         uses: actions/download-artifact@v4
@@ -48,7 +52,7 @@ jobs:
       - name: Copiar archivos al servidor EC2
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ secrets[matrix.ec2_instance] }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "./*"
@@ -57,7 +61,7 @@ jobs:
       - name: Reiniciar Nginx
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ secrets[matrix.ec2_instance] }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
